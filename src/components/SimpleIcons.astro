@@ -8,9 +8,16 @@ interface Props {
 	setFill?: string;
 }
 
-const { icon, width, height,setFill } = Astro.props;
+const { icon, width, height, setFill } = Astro.props;
 ---
 
-<div title={icon.title} style={{ display: "inline-block", width: width, height: height, fill: setFill == null ? "#"+icon.hex : setFill }}>
+<div
+	title={icon.title}
+	style={{
+		display: 'inline-block',
+		width: width,
+		height: height,
+		fill: setFill == null ? '#' + icon.hex : setFill,
+	}}>
 	<Fragment set:html={icon.svg} />
 </div>

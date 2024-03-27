@@ -1,5 +1,5 @@
 ---
-interface Links  {
+interface Links {
 	href: string;
 	title: string;
 }
@@ -12,29 +12,36 @@ interface Props {
 	navBar: Links[];
 }
 
-const { href, title, description, imageAlt, imageUrl,navBar } = Astro.props;
+const { href, title, description, imageAlt, imageUrl, navBar } = Astro.props;
 ---
 
 <div class='card'>
-	<div class="sm:flex justify-between items-center">
-		<a href={href} class='userInfo'>
+	<div class='sm:flex justify-between items-center'>
+		<a
+			href={href}
+			class='userInfo'>
 			<img
 				class='image'
 				src={imageUrl}
 				alt={imageAlt}
 			/>
 			<div>
-				<div
-					class='userName'
-					>{title}</div
-				>
+				<div class='userName'>{title}</div>
 				<div class='userDescription'>{description}</div>
 			</div>
 		</a>
-		<div class="justify-center sm:justify-normal flex gap-1">
-			{navBar.map((link) => {
-				return <a class="nv_link" href={link.href}>{link.title}</a>
-			})}
+		<div class='justify-center sm:justify-normal flex gap-1'>
+			{
+				navBar.map((link) => {
+					return (
+						<a
+							class='nv_link'
+							href={link.href}>
+							{link.title}
+						</a>
+					);
+				})
+			}
 		</div>
 	</div>
 	<slot />
@@ -51,12 +58,12 @@ const { href, title, description, imageAlt, imageUrl,navBar } = Astro.props;
 		padding-right: 15px;
 	}
 	.nv_link:hover {
-		color: rgba(255,255,255,0.5);
+		color: rgba(255, 255, 255, 0.5);
 		text-decoration: underline rgba(255, 255, 255, 0.5) !important;
-		background-color: rgba(255,255,255,0.1)
+		background-color: rgba(255, 255, 255, 0.1);
 	}
 	.userInfo:hover {
-		background-color: rgba(255,255,255,0.1)
+		background-color: rgba(255, 255, 255, 0.1);
 	}
 	.nv_activeLink {
 		text-decoration: solid rgba(255, 255, 255, 1);
@@ -82,7 +89,7 @@ const { href, title, description, imageAlt, imageUrl,navBar } = Astro.props;
 		color: white;
 		font-size: 30px !important;
 		font-weight: bold;
-		margin:0;
+		margin: 0;
 		line-height: 1;
 	}
 	.image {

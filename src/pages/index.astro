@@ -4,6 +4,8 @@ import Card from '../components/Card.astro';
 import * as icons from 'simple-icons';
 import SimpleIcons from '../components/SimpleIcons.astro';
 import Twemoji from '../components/Twemojis';
+import Socials from '../components/Socials';
+import NavBarLinks from '../components/NavBarLinks';
 ---
 
 <Layout
@@ -15,86 +17,22 @@ import Twemoji from '../components/Twemojis';
 		description={'a data nerd. Now in Astro!'}
 		imageAlt={'Nia Statistics Logo'}
 		imageUrl={'/Main.png'}
-		navBar={[
-			{
-				href: '/',
-				title: 'Home',
-			},
-			{
-				href: '/',
-				title: 'QnA',
-			},
-			{
-				href: '/',
-				title: 'API',
-			},
-			{
-				href: '/',
-				title: 'Rants',
-			},
-		]}>
+		navBar={NavBarLinks}>
 		<div class='flex gap-1 justify-center flex-wrap'>
 			{
-				[
-					{
-						href: 'https://discord.com/users/249143471296741379',
-						title: 'Discord (@skipped_breakfast)',
-						hex: "#"+icons.siDiscord.hex,
-						icon: (
-							<SimpleIcons
-								setFill={"#fff"}
-								height='15px'
-								width='15px'
-								icon={icons.siDiscord}
-							/>
-						),
-					},
-					{
-						href: 'https://discord.gg/PKD8XJrRjk',
-						title: 'My Discord server',
-						hex: "#"+icons.siDiscord.hex,
-						icon: (
-							<SimpleIcons
-								setFill={"#fff"}
-								height='15px'
-								width='15px'
-								icon={icons.siDiscord}
-							/>
-						),
-					},
-					{
-						href: 'https://twitter.com/skippyBreakfast',
-						title: 'Twitter (@skippyBreakfast)',
-						hex: "#"+icons.siTwitter.hex,
-						icon: (
-							<SimpleIcons
-								setFill={"#fff"}
-								height='15px'
-								width='15px'
-								icon={icons.siTwitter}
-							/>
-						),
-					},
-					{
-						href: 'https://youtube.com/@niastats',
-						title: 'YouTube (@niastats)',
-						hex: "#"+icons.siYoutube.hex,
-						icon: (
-							<SimpleIcons
-								setFill={"#fff"}
-								height='15px'
-								width='15px'
-								icon={icons.siYoutube}
-							/>
-						),
-					},
-				].map((social) => {
+				Socials.map((social) => {
 					return (
 						<a
-						style={{background: social.hex}}
+							style={{ background: social.hex }}
 							class='socials whitespace-nowrap'
 							href={social.href}>
-							{social.icon}&nbsp;
+							<SimpleIcons
+								setFill={'#fff'}
+								height='15px'
+								width='15px'
+								icon={social.icon}
+							/>
+							&nbsp;
 							{social.title}
 						</a>
 					);
