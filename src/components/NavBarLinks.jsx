@@ -6,15 +6,15 @@ export default [
 		title: 'Home',
 	},
 	{
-		href: '/',
+		href: '/qna',
 		title: 'QnA',
 	},
 	{
-		href: '/',
+		href: '/api',
 		title: 'API',
 	},
 	{
-		href: '/',
+		href: '/rants',
 		title: 'Rants',
 	},
 ];
