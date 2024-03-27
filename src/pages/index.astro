@@ -1,0 +1,270 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import * as icons from 'simple-icons';
+import SimpleIcons from '../components/SimpleIcons.astro';
+import Twemoji from '../components/Twemojis';
+---
+
+<Layout
+	title='Nia Statistics'
+	description={'The main page of the nia-statistics.com website.'}>
+	<Card
+		href='/'
+		title='Nia Statistics'
+		description={'a data nerd. Now in Astro!'}
+		imageAlt={'Nia Statistics Logo'}
+		imageUrl={'/Main.png'}
+		navBar={[
+			{
+				href: '/',
+				title: 'Home',
+			},
+			{
+				href: '/',
+				title: 'QnA',
+			},
+			{
+				href: '/',
+				title: 'API',
+			},
+			{
+				href: '/',
+				title: 'Rants',
+			},
+		]}>
+		<div class='flex gap-1 justify-center flex-wrap'>
+			{
+				[
+					{
+						href: 'https://discord.com/users/249143471296741379',
+						title: 'Discord (@skipped_breakfast)',
+						hex: "#"+icons.siDiscord.hex,
+						icon: (
+							<SimpleIcons
+								setFill={"#fff"}
+								height='15px'
+								width='15px'
+								icon={icons.siDiscord}
+							/>
+						),
+					},
+					{
+						href: 'https://discord.gg/PKD8XJrRjk',
+						title: 'My Discord server',
+						hex: "#"+icons.siDiscord.hex,
+						icon: (
+							<SimpleIcons
+								setFill={"#fff"}
+								height='15px'
+								width='15px'
+								icon={icons.siDiscord}
+							/>
+						),
+					},
+					{
+						href: 'https://twitter.com/skippyBreakfast',
+						title: 'Twitter (@skippyBreakfast)',
+						hex: "#"+icons.siTwitter.hex,
+						icon: (
+							<SimpleIcons
+								setFill={"#fff"}
+								height='15px'
+								width='15px'
+								icon={icons.siTwitter}
+							/>
+						),
+					},
+					{
+						href: 'https://youtube.com/@niastats',
+						title: 'YouTube (@niastats)',
+						hex: "#"+icons.siYoutube.hex,
+						icon: (
+							<SimpleIcons
+								setFill={"#fff"}
+								height='15px'
+								width='15px'
+								icon={icons.siYoutube}
+							/>
+						),
+					},
+				].map((social) => {
+					return (
+						<a
+						style={{background: social.hex}}
+							class='socials whitespace-nowrap'
+							href={social.href}>
+							{social.icon}&nbsp;
+							{social.title}
+						</a>
+					);
+				})
+			}
+		</div>
+
+		<br />
+
+		<h1>
+			Hi! <Twemoji
+				client:only
+				emoji={'👋'}
+				height='30px'
+				width='30px'
+			/>
+		</h1>
+		<h2>
+			I am <strong>Nia</strong>! I code so many different and unique things that
+			most haven't seen.
+		</h2>
+		<h2>I also stream 24/7 statistics on my <strong>YouTube</strong> page!</h2>
+		<br />
+		<h2>Here are some technologies I know: Databases</h2>
+		<div class='flex fill-white'>
+			<SimpleIcons
+				height='40px'
+				width='40px'
+				icon={icons.siPostgresql}
+			/>
+			<SimpleIcons
+				height='40px'
+				width='40px'
+				icon={icons.siMysql}
+			/>
+		</div>
+		<h2>Coding languages</h2>
+		<div class='flex fill-white'>
+			<SimpleIcons
+				height='40px'
+				width='40px'
+				icon={icons.siJavascript}
+			/>
+			<SimpleIcons
+				height='40px'
+				width='40px'
+				icon={icons.siNodedotjs}
+			/>
+			<SimpleIcons
+				height='40px'
+				width='40px'
+				icon={icons.siTypescript}
+			/>
+			<SimpleIcons
+				height='40px'
+				width='40px'
+				icon={icons.siCsharp}
+			/>
+			<SimpleIcons
+				height='40px'
+				width='40px'
+				icon={icons.siPython}
+			/>
+		</div>
+		<h2>Web technolgoies</h2>
+		<div class='flex fill-white'>
+			<SimpleIcons
+				height='40px'
+				width='40px'
+				icon={icons.siHtml5}
+			/>
+			<SimpleIcons
+				height='40px'
+				width='40px'
+				icon={icons.siCss3}
+			/>
+			<SimpleIcons
+				height='40px'
+				width='40px'
+				icon={icons.siAstro}
+			/>
+			<SimpleIcons
+				height='40px'
+				width='40px'
+				icon={icons.siReact}
+			/>
+			<SimpleIcons
+				height='40px'
+				width='40px'
+				icon={icons.siNextdotjs}
+			/>
+		</div>
+	</Card>
+</Layout>
+
+<style>
+	h1 {
+		margin: 2px;
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: left;
+	}
+	h2 {
+		margin: 2px;
+		font-size: 1.5rem;
+		line-height: 1;
+		text-align: left;
+	}
+	.socials {
+		display: flex;
+		width: auto;
+		max-width: 300px;
+		justify-content: center;
+		align-items: center;
+		background-color: rgba(238, 175, 192, 1);
+		border: none;
+		border: 50px;
+		color: white;
+	}
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	.astro-a {
+		position: absolute;
+		top: -32px;
+		left: 50%;
+		transform: translatex(-50%);
+		width: 220px;
+		height: auto;
+		z-index: -1;
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.instructions {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(
+			rgba(var(--accent-dark), 66%),
+			rgba(var(--accent-dark), 33%)
+		);
+		padding: 1.5rem;
+		border-radius: 8px;
+	}
+	.instructions code {
+		font-size: 0.8em;
+		font-weight: bold;
+		background: rgba(var(--accent-light), 12%);
+		color: rgb(var(--accent-light));
+		border-radius: 4px;
+		padding: 0.3em 0.4em;
+	}
+	.instructions strong {
+		color: rgb(var(--accent-light));
+	}
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 2rem;
+		padding: 0;
+	}
+</style>

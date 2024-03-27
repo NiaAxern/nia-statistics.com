@@ -1,0 +1,106 @@
+---
+interface Links  {
+	href: string;
+	title: string;
+}
+interface Props {
+	title: string;
+	href: string;
+	description: string;
+	imageAlt: string;
+	imageUrl: string;
+	navBar: Links[];
+}
+
+const { href, title, description, imageAlt, imageUrl,navBar } = Astro.props;
+---
+
+<div class='card'>
+	<div class="sm:flex justify-between items-center">
+		<a href={href} class='userInfo'>
+			<img
+				class='image'
+				src={imageUrl}
+				alt={imageAlt}
+			/>
+			<div>
+				<div
+					class='userName'
+					>{title}</div
+				>
+				<div class='userDescription'>{description}</div>
+			</div>
+		</a>
+		<div class="justify-center sm:justify-normal flex gap-1">
+			{navBar.map((link) => {
+				return <a class="nv_link" href={link.href}>{link.title}</a>
+			})}
+		</div>
+	</div>
+	<slot />
+</div>
+<style>
+	.nv_link {
+		background-color: transparent;
+		transition: all 0.3s;
+		color: white;
+		border: none;
+		text-decoration: solid transparent;
+		padding: 10px;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.nv_link:hover {
+		color: rgba(255,255,255,0.5);
+		text-decoration: underline rgba(255, 255, 255, 0.5) !important;
+		background-color: rgba(255,255,255,0.1)
+	}
+	.userInfo:hover {
+		background-color: rgba(255,255,255,0.1)
+	}
+	.nv_activeLink {
+		text-decoration: solid rgba(255, 255, 255, 1);
+	}
+	.userDescription {
+		font-size: 12.5px;
+	}
+	.userInfo {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+		background-color: transparent;
+		transition: all 0.3s;
+		color: white;
+		border: none;
+		text-decoration: solid transparent;
+	}
+	.userName {
+		padding: 0;
+		background-color: transparent;
+		border: none;
+		color: white;
+		font-size: 30px !important;
+		font-weight: bold;
+		margin:0;
+		line-height: 1;
+	}
+	.image {
+		border-radius: 999px;
+		background-color: white;
+		width: 50px;
+		aspect-ratio: 1/1;
+	}
+	.card {
+		display: inline;
+		vertical-align: middle;
+		max-width: 800px;
+		width: 100%;
+		height: 90vh;
+		border-radius: 0.5em;
+		padding: 10px;
+		margin: auto;
+		align-self: center;
+		overflow-y: auto;
+	}
+</style>

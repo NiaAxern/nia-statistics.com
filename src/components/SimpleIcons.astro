@@ -1,0 +1,16 @@
+---
+import * as icons from 'simple-icons';
+icons.si1001tracklists;
+interface Props {
+	icon: icons.SimpleIcon;
+	width: string;
+	height: string;
+	setFill?: string;
+}
+
+const { icon, width, height,setFill } = Astro.props;
+---
+
+<div title={icon.title} style={{ display: "inline-block", width: width, height: height, fill: setFill == null ? "#"+icon.hex : setFill }}>
+	<Fragment set:html={icon.svg} />
+</div>

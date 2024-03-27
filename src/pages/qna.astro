@@ -1,0 +1,157 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+---
+
+<Layout
+	title='Nia Statistics'
+	description={'The main page of the nia-statistics.com website.'}>
+	<Card
+		href='/'
+		title='Nia Statistics'
+		description={'Questions and Answers'}
+		imageAlt={'Nia Statistics Logo'}
+		imageUrl={'/Main.png'}>
+		<style>
+			.q {
+				font-size: 30px;
+				font-weight: bold;
+			}
+			.a {
+				font-size: 20px;
+				color: pink;
+				display: flex;
+				justify-content: start;
+				align-items: center;
+				gap: 2px;
+			}
+		</style>
+		<div style='display: flex; flex-direction: column; gap: 1px'>
+			<div>
+				<div class='q'>Where are you from?</div>
+				<div class='a'>
+					im from Finland!
+					<img
+						style='object-fit: scale-down'
+						src='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Finland.svg/800px-Flag_of_Finland.svg.png'
+						height='20'
+						width='20'
+					/>
+				</div>
+			</div>
+			<div>
+				<div class='q'>How did you come up with Nia?</div>
+				<div class='a'>
+					i used to go by Mixerno, Axern and MixAxern so i decided to just take
+					2 letters from my birthname and the A from Axern and thats Nia! ❤️
+				</div>
+			</div>
+			<div>
+				<div class='q'>What coding languages do you know?</div>
+				<div class='a'>
+					I know a lot of JavaScript and Node.JS, i've also been learning
+					TypeScript, C#, Python and Java (i know them OK).<br />
+					I also know a few web frameworks like React and Next.JS (Express.JS too)<br
+					/>
+					I have also been learning database engines like PostgreSQL, MySQL and SQL
+					server. (this website uses postgresql btw)<br />
+					I want to learn GO, Flutter and Rust in the future! 👀❤️
+				</div>
+				<div style='opacity: 20%; font-size: 14px'>
+					HTML & CSS is what i also know, they arent really a coding language
+					but who cares xd
+				</div>
+			</div>
+			<div>
+				<div class='q'>How long have you been coding?</div>
+				<div class='a'>
+					I started coding HTML,CSS and JS in early 2020 and my first project
+					was basically Mixerno.Space.
+				</div>
+			</div>
+			<div>
+				<div class='q'>
+					Do you speak any other languages other than English?
+				</div>
+				<div class='a'>Finnish and English only.</div>
+			</div>
+			<div>
+				<div class='q'>Can i use your website API's?</div>
+				<div class='a'>
+					<span
+						>go ahead! just be aware that i might change stuff often / stuff
+						might break often.<br />
+						just join my discord server <a
+							href='https://discord.gg/PKD8XJrRjk'
+							style='width: auto; font-size: 15px;'
+							>(link)</a
+						> for announcements and reporting bugs ^^</span
+					>
+				</div>
+			</div>
+		</div>
+		<div style='opacity: 20%; font-size: 14px'>theres nothing more lol</div>
+	</Card>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	.astro-a {
+		position: absolute;
+		top: -32px;
+		left: 50%;
+		transform: translatex(-50%);
+		width: 220px;
+		height: auto;
+		z-index: -1;
+	}
+	h1 {
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+		margin-bottom: 1em;
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.instructions {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(
+			rgba(var(--accent-dark), 66%),
+			rgba(var(--accent-dark), 33%)
+		);
+		padding: 1.5rem;
+		border-radius: 8px;
+	}
+	.instructions code {
+		font-size: 0.8em;
+		font-weight: bold;
+		background: rgba(var(--accent-light), 12%);
+		color: rgb(var(--accent-light));
+		border-radius: 4px;
+		padding: 0.3em 0.4em;
+	}
+	.instructions strong {
+		color: rgb(var(--accent-light));
+	}
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 2rem;
+		padding: 0;
+	}
+</style>

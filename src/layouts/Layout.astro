@@ -1,0 +1,119 @@
+---
+import Card from '../components/Card.astro';
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<script is:inline src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+		<meta
+			property="og:title"
+			content={title} />
+		<meta
+			property="og:type"
+			content="website" />
+		<meta
+			property="og:url"
+			content="https://nia-statistics.com" />
+		<meta
+			property="og:image"
+			content="/Main.png" />
+		<meta
+			property="og:description"
+			content={description} />
+		<meta
+			name="theme-color"
+			content="#ffc0cb" />
+
+		<!-- Include this to make the og:image larger -->
+		<meta
+			name="twitter:card"
+			content="summary_large_image" />
+	</head>
+	<body style="display: flex; align-items: center" class="css-selector">
+		<slot />
+	</body>
+</html>
+<style is:global>
+	body {
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		margin: 0;
+	}
+
+	html,
+	body {
+		height: 100%;
+	}
+
+	.card {
+		backdrop-filter: blur(16px) saturate(180%);
+		-webkit-backdrop-filter: blur(16px) saturate(180%);
+		background-color: rgba(17, 25, 40, 0.75);
+		border-radius: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.125);
+
+		color: white;
+	}
+
+	.css-selector {
+		background: linear-gradient(
+			0deg,
+			rgba(115, 207, 244, 0.9),
+			rgba(115, 207, 244, 0.9),
+			rgba(238, 175, 192, 0.9),
+			rgba(238, 175, 192, 0.9),
+			rgba(255, 255, 255, 0.9),
+			rgba(255, 255, 255, 0.9),
+			rgba(238, 175, 192, 0.9),
+			rgba(238, 175, 192, 0.9),
+			rgba(115, 207, 244, 0.9),
+			rgba(115, 207, 244, 0.9)
+		);
+		background-size: 600% 600%;
+		animation: AnimationName 18s ease-in-out infinite;
+	}
+
+	@keyframes AnimationName {
+		0% {
+			background-position: 0% 0%;
+		}
+
+		50% {
+			background-position: 0% 100%;
+		}
+
+		100% {
+			background-position: 0% 0%;
+		}
+	}
+
+	a {
+		border: solid 1px #3ea6ff;
+		background-color: transparent;
+		color: black;
+		background-color: #3ea6ff;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-radius: 0.5em;
+		transition: 0.3s;
+		text-decoration: none;
+	}
+
+	a:hover {
+		color: white;
+	}
+</style>
