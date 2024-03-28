@@ -9,12 +9,12 @@ import NavBarLinks from '../components/NavBarLinks';
 ---
 
 <Layout
-	title='Nia Statistics'
-	description={'The main page of the nia-statistics.com website.'}>
+	title='Nia Statistics - Projects'
+	description={'The projects page of the nia-statistics.com website.'}>
 	<Card
 		href='/'
 		title='Nia Statistics'
-		description={'a data nerd. Now in Astro!'}
+		description={'All of my cool projects!'}
 		imageAlt={'Nia Statistics Logo'}
 		imageUrl={'/Main.png'}
 		navBar={NavBarLinks}>
@@ -52,95 +52,33 @@ import NavBarLinks from '../components/NavBarLinks';
 			/>
 		</h1>
 		<h2>
-			I am <strong>Nia</strong>! I code so many different and unique things that
-			most haven't seen.
+			Here are my projects!
 		</h2>
-		<h2>I also stream 24/7 statistics on my <strong>YouTube</strong> page!</h2>
 		<br />
-		<h2>Here are some technologies I know: Databases</h2>
-		<div class='flex fill-white'>
-			<SimpleIcons
-				height='40px'
-				width='40px'
-				icon={icons.siPostgresql}
-			/>
-			<SimpleIcons
-				height='40px'
-				width='40px'
-				icon={icons.siMysql}
-			/>
+		<h2>Live-counter sites:</h2>
+		<div class='flex fill-white gap-1'>
+			<a href="https://mixerno.space">Mixerno.Space*</a>
+			<a href="https://livecounts.xyz">Livecounts.xyz*</a>
+			<a href="https://axern.space">Axern.Space</a>
 		</div>
-		<h2>Coding languages</h2>
-		<div class='flex fill-white'>
-			<SimpleIcons
-				height='40px'
-				width='40px'
-				icon={icons.siJavascript}
-			/>
-			<SimpleIcons
-				height='40px'
-				width='40px'
-				icon={icons.siNodedotjs}
-			/>
-			<SimpleIcons
-				height='40px'
-				width='40px'
-				icon={icons.siTypescript}
-			/>
-			<SimpleIcons
-				height='40px'
-				width='40px'
-				icon={icons.siCsharp}
-			/>
-			<SimpleIcons
-				height='40px'
-				width='40px'
-				icon={icons.siPython}
-			/>
+		<div style='opacity: 20%; font-size: 12px; text-align: left;'>*formerly owned, now working as dev</div>
+		<h2>YouTube channels project</h2>
+		<div class='flex fill-white gap-1'>
+			<a href="/channels-project">Enter the project page</a>
 		</div>
-		<h2>Web technologies</h2>
-		<div class='flex fill-white'>
-			<SimpleIcons
-				height='40px'
-				width='40px'
-				icon={icons.siHtml5}
-			/>
-			<SimpleIcons
-				height='40px'
-				width='40px'
-				icon={icons.siCss3}
-			/>
-			<SimpleIcons
-				height='40px'
-				width='40px'
-				icon={icons.siAstro}
-			/>
-			<SimpleIcons
-				height='40px'
-				width='40px'
-				icon={icons.siReact}
-			/>
-			<SimpleIcons
-				height='40px'
-				width='40px'
-				icon={icons.siNextdotjs}
-			/>
+		<div style='opacity: 20%; font-size: 12px; text-align: left;'>The project is also used on Axern.Space (V2), Mixerno.Space (V7) and Livecounts.xyz (V3)</div>
+		<h2>YouTube trending</h2>
+		<div class='flex fill-white gap-1'>
+			<a href="/trending/everything">Every video on trending</a>
+			<a href="/trending/score">Every video on trending, by score</a>
 		</div>
-		<h2>Languages</h2>
-		<div class='flex fill-white'>
-			<img
-				style='object-fit: scale-down'
-				src='https://flagsapi.com/FI/flat/48.png'
-				height='40'
-				width='40'
-			/>
-			<img
-				style='object-fit: scale-down'
-				src='https://flagsapi.com/GB/flat/48.png'
-				height='40'
-				width='40'
-			/>
+		<h2>YT Subscriber Counts (Discord bot)</h2>
+		<div class='flex fill-white gap-1'>
+			<a href="https://discord.com/api/oauth2/authorize?client_id=1210530230679371796&permissions=274877958208&scope=bot+applications.commands">Add</a>
+			<a href="https://github.com/NiaAxern/discord-youtube-subscriber-count">Source Code</a>
+			<a href="https://discord.gg/u5UbpJTcyV">Support server</a>
 		</div>
+
 	</Card>
 </Layout>
 

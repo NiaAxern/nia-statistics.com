@@ -10,11 +10,11 @@ export default [
 		title: 'QnA',
 	},
 	{
-		href: '/api',
+		href: '/api/swagger',
 		title: 'API',
 	},
 	{
-		href: '/rants',
-		title: 'Rants',
+		href: '/projects',
+		title: 'Projects',
 	},
 ];

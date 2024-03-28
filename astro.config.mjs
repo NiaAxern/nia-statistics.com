@@ -3,16 +3,26 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
-
 import node from "@astrojs/node";
+import partytown from "@astrojs/partytown";
+import compress from "compress-astro";
+import robotsTxt from "astro-robots-txt";
+import sitemap from "@astrojs/sitemap";
+
+import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://nia-statistics.com',
+  prefetch: true,
   integrations: [tailwind(), react({
     experimentalReactChildren: true
-  })],
-  output: "server",
-  adapter: node({
-    mode: "standalone"
-  })
+  }), partytown({
+    config: {
+      forward: ['dataLayer.push']
+    }
+  }), compress(), robotsTxt({
+    sitemap: ['https://nia-statistics.com/sitemap-index.xml']
+  }), sitemap(), mdx()],
+  output: "server"
 });

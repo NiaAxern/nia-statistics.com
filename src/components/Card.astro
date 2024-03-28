@@ -35,6 +35,7 @@ const { href, title, description, imageAlt, imageUrl, navBar } = Astro.props;
 				navBar.map((link) => {
 					return (
 						<a
+							data-astro-prefetch
 							class='nv_link'
 							href={link.href}>
 							{link.title}

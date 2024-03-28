@@ -1,6 +1,5 @@
 ---
-import Card from '../components/Card.astro';
-
+import { ViewTransitions } from 'astro:transitions';
 interface Props {
 	title: string;
 	description: string;
@@ -10,39 +9,83 @@ const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang='en'>
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
+		<meta charset='UTF-8' />
+		<meta
+			name='description'
+			content={description}
+		/>
+		<meta
+			name='viewport'
+			content='width=device-width'
+		/>
+		<meta
+			name='generator'
+			content={Astro.generator}
+		/>
 		<title>{title}</title>
-		<script is:inline src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+		<script
+			is:inline
+			src='https://twemoji.maxcdn.com/v/latest/twemoji.min.js'
+			crossorigin='anonymous'
+		></script>
 		<meta
-			property="og:title"
-			content={title} />
+			property='og:title'
+			content={title}
+		/>
 		<meta
-			property="og:type"
-			content="website" />
+			property='og:type'
+			content='website'
+		/>
 		<meta
-			property="og:url"
-			content="https://nia-statistics.com" />
+			property='og:url'
+			content='https://nia-statistics.com'
+		/>
 		<meta
-			property="og:image"
-			content="/Main.png" />
+			property='og:image'
+			content='/Main.png'
+		/>
 		<meta
-			property="og:description"
-			content={description} />
+			property='og:description'
+			content={description}
+		/>
 		<meta
-			name="theme-color"
-			content="#ffc0cb" />
+			name='theme-color'
+			content='#ffc0cb'
+		/>
 
 		<!-- Include this to make the og:image larger -->
 		<meta
-			name="twitter:card"
-			content="summary_large_image" />
+			name='twitter:card'
+			content='summary_large_image'
+		/>
+		<link rel="sitemap" href="/sitemap-index.xml" />
 	</head>
-	<body style="display: flex; align-items: center" class="css-selector">
+	<body
+		style='display: flex; align-items: center'
+		class='css-selector'>
+		<ViewTransitions />
+		<!-- Google tag (gtag.js) -->
+		<script
+			type='text/partytown'
+			is:inline
+			async={true}
+			src='https://www.googletagmanager.com/gtag/js?id=G-N2KBC5543T'
+		></script>
+		<script type='text/partytown' is:inline>
+			//@ts-ignore
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				//@ts-ignore
+				dataLayer.push(arguments);
+			}
+			//@ts-ignore
+			gtag('js', new Date());
+
+			//@ts-ignore
+			gtag('config', 'G-N2KBC5543T');
+		</script>
 		<slot />
 	</body>
 </html>
