@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import * as icons from 'simple-icons';
+import SimpleIcons from '../../components/SimpleIcons.astro';
+import Twemoji from '../../components/Twemojis';
+import Socials from '../../components/Socials';
+import NavBarLinks from '../../components/NavBarLinks';
+
+const getDatabaseSize = await fetch(
+	'https://youtubecrap.nia-statistics.com/getdatabasesize',
+)
+	.then((resp) => resp.json())
+	.catch(console.error);
+import { Button, Input } from '@nextui-org/react';
+import type { ChangeEventHandler } from 'react';
+import Search from '../../components/search';
+---
+
+<Layout
+	title='Nia Statistics - YouTube channels project'
+	description={'The main page of the YouTube channels project.'}>
+	<Card
+		href='/'
+		title='the YouTube channels project'
+		description={`${getDatabaseSize?.data?.toLocaleString('en-US')} channels`}
+		imageAlt={'Nia Statistics Logo'}
+		imageUrl={'/Main.png'}
+		navBar={NavBarLinks}>
+		<div class='flex gap-1 justify-center flex-wrap'>
+			{
+				Socials.map((social) => {
+					return (
+						<a
+							style={{ background: social.hex }}
+							class='socials whitespace-nowrap'
+							href={social.href}>
+							<SimpleIcons
+								setFill={'#fff'}
+								height='15px'
+								width='15px'
+								icon={social.icon}
+							/>
+							&nbsp;
+							{social.title}
+						</a>
+					);
+				})
+			}
+		</div>
+
+		<div style='opacity: 20%; font-size: 12px; text-align: center;'>
+			Need to go back? click on "the YouTube channels project"!
+		</div>
+		<br />
+
+		<h1>the YouTube channels project</h1>
+		<Search client:only />
+	</Card>
+</Layout>
+
+<style>
+	h1 {
+		margin: 2px;
+		font-size: 3rem;
+		font-weight: 700;
+		line-height: 1.2em;
+		text-align: center;
+	}
+	h2 {
+		margin: 2px;
+		font-size: 1.5rem;
+		line-height: 1.2em;
+		text-align: left;
+	}
+	.socials {
+		display: flex;
+		width: auto;
+		max-width: 300px;
+		justify-content: center;
+		align-items: center;
+		background-color: rgba(238, 175, 192, 1);
+		border: none;
+		border: 50px;
+		color: white;
+	}
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	.astro-a {
+		position: absolute;
+		top: -32px;
+		left: 50%;
+		transform: translatex(-50%);
+		width: 220px;
+		height: auto;
+		z-index: -1;
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.instructions {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(
+			rgba(var(--accent-dark), 66%),
+			rgba(var(--accent-dark), 33%)
+		);
+		padding: 1.5rem;
+		border-radius: 8px;
+	}
+	.instructions code {
+		font-size: 0.8em;
+		font-weight: bold;
+		background: rgba(var(--accent-light), 12%);
+		color: rgb(var(--accent-light));
+		border-radius: 4px;
+		padding: 0.3em 0.4em;
+	}
+	.instructions strong {
+		color: rgb(var(--accent-light));
+	}
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 2rem;
+		padding: 0;
+	}
+</style>

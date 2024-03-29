@@ -2,10 +2,6 @@
 
 export default [
 	{
-		href: '/',
-		title: 'Home',
-	},
-	{
 		href: '/qna',
 		title: 'QnA',
 	},

@@ -1,0 +1,165 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Card from '../../../../components/Card.astro';
+import * as icons from 'simple-icons';
+import SimpleIcons from '../../../../components/SimpleIcons.astro';
+import Twemoji from '../../../../components/Twemojis';
+import Socials from '../../../../components/Socials';
+import NavBarLinks from '../../../../components/NavBarLinks';
+
+interface Analytics {
+	date: string;
+	subscribers: string | number;
+	views: string | number;
+	videos: string | number;
+	deleteThis?: boolean;
+}
+
+const data = await fetch('http://localhost:1835/channel/' + Astro.params.id)
+	.then((resp) => resp.json())
+	.catch(console.error);
+const user = data?.channels?.[0];
+import Search from '../../../../components/search';
+import { VscVerified } from 'react-icons/vsc';
+import CustomChart from '../../../../components/Chart';
+
+// prepare to see some crazy ass shit :3
+const analytics = await fetch(
+	'https://analytics.nia-statistics.com/raw/' + Astro.params.id,
+)
+	.then((resp) => resp.json())
+	.catch(console.error);
+
+let newDataArray: Analytics[] = analytics.data;
+newDataArray.shift();
+newDataArray = newDataArray.filter((a: any) => a.deleteThis != true);
+newDataArray.sort(
+	(a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+); // i dont trust my api to sort it automatically...
+interface DataArr {
+	0: number;
+	1: number;
+}
+let chartArray: DataArr[] = [];
+let startDay = new Date(newDataArray[0].date.split('T')[0]).getTime();
+let endDay = new Date(
+	newDataArray[newDataArray.length - 1].date.split('T')[0],
+).getTime();
+for (let i = startDay; i <= endDay; i += 86400 * 1000) {
+	const getNearestNumber = newDataArray
+		?.filter((a) => new Date(a.date).getTime() <= i)
+		?.filter((a) => isNaN(parseInt(`${a.subscribers}`)) == false) // this is getting ridiculous
+		?.sort(
+			(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+		)?.[0]?.subscribers;
+	if (getNearestNumber != null)
+		chartArray.push([i, parseInt(`${getNearestNumber}`)]);
+}
+---
+
+<Layout
+	title=`Nia Statistics - ${user.channelHandle} analytics`
+	description={`Analytics for ${user?.channelHandle ?? user.channelId}, also known as ${user?.title}`}>
+	<Card
+		href='/'
+		title={user.title}
+		isVerified={user?.isNameVerified}
+		description={`${user?.channelHandle ?? user.channelId}`}
+		imageAlt={user?.channelHandle ?? user.channelId ?? 'Nia Statistics Logo'}
+		imageUrl={user?.thumbnailDetails?.thumbnails?.[0]?.url?.replace(
+			's48',
+			's100',
+		) ?? '/Main.png'}
+		navBar={NavBarLinks}>
+		<div style='opacity: 20%; font-size: 12px; text-align: center;'>
+			Need to go back? click on the username!
+		</div>
+		<CustomChart
+			client:only
+			data={chartArray}
+			user={user}
+		/>
+		<br />
+		<h2>the YouTube channels project</h2>
+		<Search client:only />
+	</Card>
+</Layout>
+
+<style>
+	h1 {
+		margin: 2px;
+		font-size: 3rem;
+		font-weight: 700;
+		line-height: 1.2em;
+		text-align: center;
+	}
+	h2 {
+		margin: 2px;
+		font-size: 1.5rem;
+		line-height: 1.2em;
+		text-align: center;
+	}
+	.socials {
+		display: flex;
+		width: auto;
+		max-width: 300px;
+		justify-content: center;
+		align-items: center;
+		background-color: rgba(238, 175, 192, 1);
+		border: none;
+		border: 50px;
+		color: white;
+	}
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	.astro-a {
+		position: absolute;
+		top: -32px;
+		left: 50%;
+		transform: translatex(-50%);
+		width: 220px;
+		height: auto;
+		z-index: -1;
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.instructions {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(
+			rgba(var(--accent-dark), 66%),
+			rgba(var(--accent-dark), 33%)
+		);
+		padding: 1.5rem;
+		border-radius: 8px;
+	}
+	.instructions code {
+		font-size: 0.8em;
+		font-weight: bold;
+		background: rgba(var(--accent-light), 12%);
+		color: rgb(var(--accent-light));
+		border-radius: 4px;
+		padding: 0.3em 0.4em;
+	}
+	.instructions strong {
+		color: rgb(var(--accent-light));
+	}
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 2rem;
+		padding: 0;
+	}
+</style>

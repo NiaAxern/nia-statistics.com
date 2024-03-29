@@ -26,6 +26,81 @@ interface streamboard_channel {
 	getStar: boolean;
 }
 
+export interface search_channel {
+	channelId: string;
+	title: string;
+	thumbnailDetails: ThumbnailDetails;
+	metric: Metric;
+	timeCreatedSeconds: string;
+	isNameVerified: boolean;
+	channelHandle: string;
+}
+
+export interface Metric {
+	subscriberCount: string;
+	videoCount: string;
+	totalVideoViewCount: string;
+}
+
+export interface ThumbnailDetails {
+	thumbnails: Thumbnail[];
+}
+
+export interface Thumbnail {
+	url: string;
+	width: number;
+	height: number;
+}
+
+import client from 'https';
+
+import fs from 'fs';
+function downloadImage(url: string, filepath: string) {
+	return new Promise((resolve, reject) => {
+		client.get(url, (res) => {
+			if (res.statusCode === 200) {
+				res
+					.pipe(fs.createWriteStream(filepath))
+					//.on('error', reject)
+					.once('close', () => resolve(filepath));
+			} else {
+				console.log('not found!', res.statusCode, url, filepath);
+				// Consume response data to free up memory
+				res.resume();
+				reject(
+					new Error(`Request Failed With a Status Code: ${res.statusCode}`),
+				);
+			}
+		});
+	});
+}
+import { topColoursHex } from '@colour-extractor/colour-extractor';
+
+function getBrightestColors(colorArray: string[]) {
+	var brighests: any = [];
+	let brightestColor = null;
+
+	let maxBrightness = Number.NEGATIVE_INFINITY;
+
+	for (const color of colorArray) {
+		// Remove "#" if present
+		const hexColor = color.startsWith('#') ? color.slice(1) : color;
+
+		// Convert hex color to integer
+		const num = parseInt(hexColor, 16);
+
+		// Calculate brightness (sum of RGB values)
+		const r = (num >> 16) & 0xff;
+		const g = (num >> 8) & 0xff;
+		const b = num & 0xff;
+		const brightness = r + g + b;
+
+		// Update brightest color if current brightness is higher
+		brighests.push([brightness, color]);
+	}
+
+	return brighests.sort((a: any, b: any) => b[0] - a[0]);
+}
 const app = new Elysia({ prefix: '/api' })
 	.use(cors())
 	.use(swagger())
@@ -115,6 +190,84 @@ const app = new Elysia({ prefix: '/api' })
 			};
 		}
 	})
+	.get(
+		'/youtube/channels/search/:query',
+		async ({
+			params,
+			set,
+		}: {
+			params: { query: string };
+			set: { status: number };
+		}) => {
+			const get: search_channel[] = await fetch(
+				'https://youtubecrap.nia-statistics.com/studio/searchchannel/' +
+					params.query +
+					'/10',
+			)
+				.then((resp) => resp.json())
+				.catch(console.error);
+			if (!get) {
+				set.status = 500;
+				return {
+					success: false,
+					error: 'get is undefined',
+				};
+			} else if ((get ?? []).length == 0) {
+				set.status = 500;
+				return {
+					success: false,
+					error: '(get ?? []).length == 0',
+				};
+			} else {
+				set.status = 200;
+				var themes: any = {};
+				for await (let channel of get) {
+					var spesID = Date.now();
+					try {
+						if (channel?.thumbnailDetails?.thumbnails?.[0]?.url) {
+							await downloadImage(
+								channel?.thumbnailDetails?.thumbnails?.[0]?.url,
+								spesID + '_' + channel.channelId + 'make_userpfp.jpg',
+							).catch(console.error);
+							const getColor: any = await topColoursHex(
+								spesID + '_' + channel.channelId + 'make_userpfp.jpg',
+							);
+							themes[channel.channelId] = getBrightestColors(getColor).map(
+								(a: any) => a[1],
+							);
+						}
+					} catch (e) {
+						console.error(e);
+					} finally {
+						try {
+							await fs.promises.unlink(
+								spesID + '_' + channel.channelId + 'make_userpfp.jpg',
+							);
+						} catch (e) {
+							console.error(e);
+						}
+					}
+				}
+				return {
+					success: true,
+					data: get.map((channel) => {
+						return [
+							channel.channelId,
+							channel.thumbnailDetails.thumbnails[0].url,
+							channel.title,
+							channel.channelHandle,
+							channel.isNameVerified,
+							new Date(
+								parseInt(channel.timeCreatedSeconds) * 1000,
+							).toISOString(),
+							channel.metric.subscriberCount,
+							themes?.[channel.channelId],
+						];
+					}),
+				};
+			}
+		},
+	)
 	.get(
 		'/streamboard',
 		async ({
