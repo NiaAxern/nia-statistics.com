@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import NavBarLinks from '../components/NavBarLinks';
+import Odometer from '../components/Odometer';
 ---
 
 <Layout
@@ -28,7 +29,20 @@ import NavBarLinks from '../components/NavBarLinks';
 				gap: 2px;
 			}
 		</style>
-		<div style='opacity: 20%; font-size: 30px; text-align: center;'>You seem to be lost.</div>
+		<div style='opacity: 20%; font-size: 30px; text-align: center;'>
+			You seem to be lost.
+		</div>
+
+		<div style='opacity: 20%; font-size: 60px; text-align: center;'>
+			Anyways here is an odometer!
+		</div>
+		<div class='flex justify-center text-4xl'>
+			<Odometer
+				client:only
+				count={0}
+				height={'40px'}
+			/>
+		</div>
 	</Card>
 </Layout>
 

@@ -12,9 +12,9 @@ const Odometer = ({
 }: {
 	count: number;
 	height: number | string;
-	youtubeChannelID: string;
+	youtubeChannelID?: string;
 	typeToUse?: string;
-	interval: number;
+	interval?: number;
 }) => {
 	const [counts, setCounts] = useState<any>({
 		isNegative: false,
@@ -211,6 +211,55 @@ const Odometer = ({
 				lastCount: c,
 			};
 		}
+		for (let key in numbers.current) {
+			const data = numbers.current[key];
+			console.log(data?.count);
+			if (data?.count != currentCount && numbers.current?.[key] != null) {
+				const getDivision = 10 ** idx;
+				var lastSaved = null;
+				var news: any = ['‎'];
+				const toSkip =
+					Math.floor(currentCount / getDivision) -
+					Math.floor(data.count / getDivision);
+				var added = 0;
+				var addCount = 1;
+				var rm = toSkip;
+				if (Math.abs(toSkip) >= 50) {
+					addCount = toSkip / 50;
+				}
+				for (
+					let calcNumbers = Math.floor(data.count / getDivision);
+					calcNumbers <= Math.floor(currentCount / getDivision);
+					calcNumbers += addCount
+				) {
+					added++;
+					const nuNumber = calcNumbers.toString().split('').reverse()[0];
+					if (lastSaved != nuNumber) {
+						news.push(nuNumber);
+						lastSaved = nuNumber;
+					}
+				}
+				if (
+					news[news.length - 1] !=
+					Math.floor(currentCount / getDivision)
+						.toString()
+						.split('')
+						.reverse()[0]
+				)
+					news = [
+						...news,
+						Math.floor(currentCount / getDivision)
+							.toString()
+							.split('')
+							.reverse()[0],
+					];
+				news = [...news, ''];
+				newCounts.push(news);
+				numbers.current[key] = null;
+			} else {
+				// do nothing, it probably already does something right now!
+			}
+		}
 		var addCommas = [];
 		const b = newCounts;
 		for (let i = 0; i < b.length; i++) {
@@ -228,7 +277,7 @@ const Odometer = ({
 	}, [currentCount]);
 	useEffect(() => {
 		const setI = setInterval(() => {
-			if (youtubeChannelID) {
+			if (youtubeChannelID != null) {
 				fetch('/api/estimations/bigdb/' + youtubeChannelID) // UCeGCG8SYUIgFO13NyOe6reQ // UCX6OQ3DkcsbYNE6H8uQQuVA // UCIPPMRA040LQr5QPyJEbmXA // UCbCmjCuTUZos6Inko4u57UQ
 					.then((resp) => resp.json())
 					.then((d) => setCurrent(parseInt(d[typeToUse])));
@@ -265,7 +314,7 @@ const Odometer = ({
 							initial={{
 								y: counts.isNegative == true ? toLel : zero,
 							}}
-							style={{ height: (1 / a.length) * 100 + '%' }}
+							//style={{ height: (1 / a.length) * 100 + '%' }}
 							animate={{
 								y: counts.isNegative == true ? zero : toLel,
 							}}
