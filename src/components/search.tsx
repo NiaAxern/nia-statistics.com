@@ -49,14 +49,14 @@ const Search = () => {
 					label='Query'
 					placeholder='Enter something like... MrBeast'
 					defaultValue=''
-					className='max-w-[400px]'
+					className='max-w-[800px]'
 				/>
-				<Button
+				{/*<Button
 					color={'secondary'}
 					size={'md'}
 					isLoading={false}>
 					Search
-				</Button>
+				</Button>*/}
 			</div>
 			<div className='text-red-500 font-bold grid gap-1'>
 				{errors.map((a: any) => {

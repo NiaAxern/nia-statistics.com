@@ -6,6 +6,7 @@ import SimpleIcons from '../components/SimpleIcons.astro';
 import Twemoji from '../components/Twemojis';
 import Socials from '../components/Socials';
 import NavBarLinks from '../components/NavBarLinks';
+import Odometer from '../components/Odometer';
 ---
 
 <Layout
@@ -40,9 +41,11 @@ import NavBarLinks from '../components/NavBarLinks';
 			}
 		</div>
 
-		<div style='opacity: 20%; font-size: 12px; text-align: center;'>If you are searching for YouTube channel toplists, click "Projects" in top-right.</div>
+		<div style='opacity: 20%; font-size: 12px; text-align: center;'>
+			If you are searching for YouTube channel toplists, click "Projects" in
+			top-right.
+		</div>
 		<br />
-
 		<h1>
 			Hi! <Twemoji
 				client:only
@@ -55,7 +58,19 @@ import NavBarLinks from '../components/NavBarLinks';
 			I am <strong>Nia</strong>! I code so many different and unique things that
 			most haven't seen.
 		</h2>
-		<h2>I also stream 24/7 statistics on my <strong>YouTube</strong> page!</h2>
+		<h2>
+			I also stream 24/7 statistics on my <strong>YouTube</strong> page!
+		</h2>
+		<span class='text-lg flex items-center gap-1'>
+			(<Odometer
+				client:only
+				youtubeChannelID={'UCeGCG8SYUIgFO13NyOe6reQ'}
+				count={0}
+				height={'28px'}
+				interval={2000}
+			/>
+			<span class='text-sm opacity-75'>subscribers</span>)</span
+		>
 		<br />
 		<h2>Here are some technologies I know: Databases</h2>
 		<div class='flex fill-white'>

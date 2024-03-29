@@ -5,9 +5,10 @@ import React, { useEffect, useState } from 'react';
 const Twemoji = ({ emoji, height, width }) => {
 	const [preEmoji, setPremoji] = useState(emoji);
 	useEffect(() => {
-		const emj = window.twemoji.parse(emoji);
-		setPremoji(emj);
-		console.log(emj);
+		if (window?.twemoji?.parse) {
+			const emj = window.twemoji.parse(emoji);
+			setPremoji(emj);
+		}
 	});
 
 	return (

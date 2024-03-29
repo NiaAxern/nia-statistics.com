@@ -13,13 +13,35 @@ interface Props {
 	imageUrl: string;
 	navBar: Links[];
 	isVerified?: boolean;
+	customColors?: string[];
 }
 
-const { href, title, description, imageAlt, imageUrl, navBar, isVerified } =
-	Astro.props;
+const {
+	href,
+	title,
+	description,
+	imageAlt,
+	imageUrl,
+	navBar,
+	isVerified,
+	customColors,
+} = Astro.props;
 ---
 
-<div class='card'>
+<div
+	class='card'
+	style={{
+		background:
+			customColors != null
+				? `linear-gradient(to top,${customColors
+						.slice(0, 1)
+						?.join(
+							', ',
+						)}, rgba(17, 25, 40, 0.75), rgba(17, 25, 40, 0.75), rgba(17, 25, 40, 0.75))`
+				: '',
+		borderColor: customColors != null ? `${customColors[0]}` : '',
+		borderWidth: customColors != null ? '2.5px' : '',
+	}}>
 	<div class='sm:flex justify-between items-center'>
 		<a
 			href={href}

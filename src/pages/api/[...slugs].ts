@@ -101,6 +101,56 @@ function getBrightestColors(colorArray: string[]) {
 
 	return brighests.sort((a: any, b: any) => b[0] - a[0]);
 }
+const getSubrate: any = ({
+	subrate = 0,
+	subcount = 0,
+	WhenHit = 0,
+	nextApiSubCount = 0,
+}) => {
+	const estSubCount = Math.floor(
+		subcount + (subrate / 86400) * Math.floor((Date.now() - WhenHit) / 1000),
+	);
+	if (estSubCount >= nextApiSubCount) {
+		return getSubrate({
+			subrate: subrate / 1.01,
+			subcount,
+			WhenHit,
+			nextApiSubCount,
+		});
+	}
+	return { estSubCount, subrate, subcount, WhenHit, nextApiSubCount };
+};
+function getNextAPI(count: string) {
+	var num;
+	if (parseFloat(count) < 1000) {
+		num = 1;
+	} else if (parseFloat(count) < 10000) {
+		num = 10;
+	} else if (parseFloat(count) < 100000) {
+		num = 100;
+	} else if (parseFloat(count) < 1000000) {
+		num = 1000;
+	} else if (parseFloat(count) < 10000000) {
+		num = 10000;
+	} else if (parseFloat(count) < 100000000) {
+		num = 100000;
+	} else if (parseFloat(count) < 1000000000) {
+		num = 1000000;
+	} else if (parseFloat(count) < 10000000000) {
+		num = 10000000;
+	} else if (parseFloat(count) < 100000000000) {
+		num = 100000000;
+	} else if (parseFloat(count) < 1000000000000) {
+		num = 1000000000;
+	} else if (parseFloat(count) < 10000000000000) {
+		num = 10000000000;
+	} else if (parseFloat(count) < 100000000000000) {
+		num = 100000000000;
+	} else {
+		num = 1000000000000;
+	}
+	return count + num;
+}
 const app = new Elysia({ prefix: '/api' })
 	.use(cors())
 	.use(swagger())
@@ -162,6 +212,151 @@ const app = new Elysia({ prefix: '/api' })
 					views_api: getEstimationData?.apiViewCount,
 					subscribers_estimated: getEstimationData?.estSubCount,
 					views_estimated: getEstimationData?.estViewCount,
+				};
+			}
+		},
+	)
+	.get(
+		'/estimations/bigdb/:id',
+		async ({
+			params,
+			set,
+		}: {
+			params: { id: string };
+			set: { status: number };
+		}) => {
+			if (params.id.startsWith('UC') == false) {
+				set.status = 400;
+				return {
+					success: false,
+					error: "params.id.startsWith('UC') == false",
+				};
+			} else if (params.id.length != 24) {
+				set.status = 400;
+				return {
+					success: false,
+					error: 'params.id.length != 24',
+				};
+			}
+			const getEstimationData = await fetch(
+				'https://youtubecrap.nia-statistics.com/channels/get/' + params.id,
+			)
+				.then((resp) => resp.json())
+				.catch(console.error);
+			if (!getEstimationData) {
+				set.status = 500;
+				return {
+					success: false,
+					error: 'getEstimationData is undefined',
+				};
+			} else if (!getEstimationData?.data?.length) {
+				set.status = 500;
+				return {
+					success: false,
+					error: 'getEstimationData.snippet is undefined',
+				};
+			} else if ((getEstimationData?.data ?? [])?.length == 0) {
+				set.status = 500;
+				return {
+					success: false,
+					error: '(getEstimationData?.data??[]).length == 0',
+				};
+			} else {
+				set.status = 200;
+				const getLinear = getSubrate({
+					subrate: parseInt(getEstimationData.data[0].sub_rate),
+					subcount: parseInt(getEstimationData.data[0].subscribers),
+					WhenHit: new Date(getEstimationData.data[0].subscriber_hit).getTime(),
+					nextApiSubCount: getNextAPI(getEstimationData.data[0].subscribers),
+				});
+				return {
+					success: true,
+					...(getEstimationData?.data[0].yt ?? {}),
+					subscribers_api: getEstimationData?.data[0].subscribers,
+					videos_api: getEstimationData?.data[0].videos,
+					views_api: getEstimationData?.data[0].views,
+					subscribers_estimated: Math.floor(getLinear.estSubCount),
+				};
+			}
+		},
+	)
+	.get(
+		'/channels/color/:id',
+		async ({
+			params,
+			set,
+		}: {
+			params: { id: string };
+			set: { status: number };
+		}) => {
+			if (params.id.startsWith('UC') == false) {
+				set.status = 400;
+				return {
+					success: false,
+					error: "params.id.startsWith('UC') == false",
+				};
+			} else if (params.id.length != 24) {
+				set.status = 400;
+				return {
+					success: false,
+					error: 'params.id.length != 24',
+				};
+			}
+			const get = await fetch(
+				'https://youtubecrap.nia-statistics.com/channels/get/' + params.id,
+			)
+				.then((resp) => resp.json())
+				.catch(console.error);
+			if (!get) {
+				set.status = 500;
+				return {
+					success: false,
+					error: 'get is undefined',
+				};
+			} else if (!get?.data) {
+				set.status = 500;
+				return {
+					success: false,
+					error: 'get.data is undefined',
+				};
+			} else if ((get?.data ?? [])?.length == 0) {
+				set.status = 500;
+				return {
+					success: false,
+					error: '(get?.data??[]).length == 0',
+				};
+			} else {
+				set.status = 200;
+				const thumbnail =
+					get?.data?.[0]?.yt?.thumbnailDetails?.thumbnails?.[0]?.url;
+				const channelId = get?.data?.[0]?.channel_id;
+				var theme = null;
+				var spesID = Date.now();
+				try {
+					if (thumbnail && channelId) {
+						await downloadImage(
+							thumbnail,
+							spesID + '_' + channelId + 'make_userpfp.jpg',
+						).catch(console.error);
+						const getColor: any = await topColoursHex(
+							spesID + '_' + channelId + 'make_userpfp.jpg',
+						);
+						theme = getBrightestColors(getColor).map((a: any) => a[1]);
+					}
+				} catch (e) {
+					console.error(e);
+				} finally {
+					try {
+						await fs.promises.unlink(
+							spesID + '_' + channelId + 'make_userpfp.jpg',
+						);
+					} catch (e) {
+						console.error(e);
+					}
+				}
+				return {
+					theme,
+					success: true,
 				};
 			}
 		},

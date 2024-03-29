@@ -27,28 +27,6 @@ import Search from '../../components/search';
 		imageAlt={'Nia Statistics Logo'}
 		imageUrl={'/Main.png'}
 		navBar={NavBarLinks}>
-		<div class='flex gap-1 justify-center flex-wrap'>
-			{
-				Socials.map((social) => {
-					return (
-						<a
-							style={{ background: social.hex }}
-							class='socials whitespace-nowrap'
-							href={social.href}>
-							<SimpleIcons
-								setFill={'#fff'}
-								height='15px'
-								width='15px'
-								icon={social.icon}
-							/>
-							&nbsp;
-							{social.title}
-						</a>
-					);
-				})
-			}
-		</div>
-
 		<div style='opacity: 20%; font-size: 12px; text-align: center;'>
 			Need to go back? click on "the YouTube channels project"!
 		</div>
