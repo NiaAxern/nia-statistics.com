@@ -258,6 +258,7 @@ const Odometer = ({
 				numbers.current[key] = null;
 			} else {
 				// do nothing, it probably already does something right now!
+				// HELP I BROKE GIT SOMEHOW
 			}
 		}
 		var addCommas = [];
